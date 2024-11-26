@@ -32,7 +32,7 @@ public class Keybinds : MonoBehaviour
     [SerializeField] ActionMapData[] actionMapData; // Array of ActionMapData elements to store keybinding data for each action.
     [SerializeField] GameObject currentSelectedKey; // Tracks the key currently being modified, allowing us to visually indicate the selected key in the UI.
     // By storing keybindings in a dictionary, we can easily look up the assigned key for any action during gameplay. This setup also makes it easy to update or change bindings later, as each action has a unique key in the dictionary.
-    public static Dictionary<string, KeyCode> keys = new Dictionary<string, KeyCode>(); // Stores action names (e.g., "Jump") mapped to KeyCode values (e.g., KeyCode.Space), making it easy to access keybindings during gameplay.
+    public static Dictionary<string, KeyCode> keybinds = new Dictionary<string, KeyCode>(); // Stores action names (e.g., "Jump") mapped to KeyCode values (e.g., KeyCode.Space), making it easy to access keybindings during gameplay.
     [SerializeField] private Color32 selectedKey = new Color32(239, 116, 36, 225);    // Colors for visual feedback when a keybinding is being selected.
     [SerializeField] private Color32 changedKey = new Color32(39, 171, 249, 225);    // Colors for visual feedback when a keybinding is being changed.
     /// <summary>
@@ -42,19 +42,19 @@ public class Keybinds : MonoBehaviour
     {
         // Loops through through each item in the actionMapData array, which holds information about each action (like "Jump" or "MoveForward") and its associated default key.
         // Looping through the actionMapData array ensures that each action gets an initial keybinding set up based on the default values, so we don’t have to manually initialize each one.
-        for (int i = 0; i < actionMapData.Length; i++)
+        for (int currentIndex = 0; currentIndex < actionMapData.Length; currentIndex++)
         {
             // Add the Action and KeyCode to the keys Dictionary: This line adds the action name (like "Jump") and its corresponding KeyCode to the keys dictionary.
             // Convert defaultKey to a KeyCode Using Enum.Parse: Enum.Parse takes a string (like "Space") and converts it into the corresponding KeyCode (like KeyCode.Space), which Unity uses for detecting specific key inputs.
             // Enum.Parse enables us to store key names as text strings in defaultKey and convert them to KeyCode values programmatically, making the setup more flexible and readable.
-            if (!keys.ContainsKey(actionMapData[i].actionName))
+            if (!keybinds.ContainsKey(actionMapData[currentIndex].actionName))
             {
-                keys.Add(actionMapData[i].actionName, (KeyCode)Enum.Parse(typeof(KeyCode), actionMapData[i].defaultKey));
+                keybinds.Add(actionMapData[currentIndex].actionName, (KeyCode)Enum.Parse(typeof(KeyCode), actionMapData[currentIndex].defaultKey));
 
             }
             // Update the UI Text to Show the Assigned Key: This line sets the text property of the keycodeDisplay UI element to show the KeyCode assigned to the action.
             // Updating the keycodeDisplay ensures that the player sees the current keybinding in the UI. Using ToString() on the KeyCode displays it in a readable format (like "Space" or "W"), making it clear to the player which key is assigned to each action.
-            actionMapData[i].keycodeDisplay.text = keys[actionMapData[i].actionName].ToString();
+            actionMapData[currentIndex].keycodeDisplay.text = keybinds[actionMapData[currentIndex].actionName].ToString();
         }
         /* 
         Summary of the above
@@ -119,7 +119,7 @@ public class Keybinds : MonoBehaviour
                     Adding ! (not) before it makes the expression true only if the key is not already in use.
                 */
                 // Ensures the new key isn’t already assigned (Already Used).
-                if (!keys.ContainsValue(changeKeyEvent.keyCode))
+                if (!keybinds.ContainsValue(changeKeyEvent.keyCode))
                 {
                     /* 
                         This line assigns the new key to the selected action. 
@@ -127,7 +127,7 @@ public class Keybinds : MonoBehaviour
                         This allows the new key to replace the old one in the dictionary only if it’s unique, preventing conflicts with other actions.
                     */
                     // Updates the dictionary with the new KeyCode.
-                    keys[currentSelectedKey.name] = changeKeyEvent.keyCode;
+                    keybinds[currentSelectedKey.name] = changeKeyEvent.keyCode;
                     /*
                         This line updates the text component of the currentSelectedKey to display the new key. 
                         ToString() converts the KeyCode to a readable format (e.g., KeyCode.Space to "Space").

@@ -21,7 +21,7 @@ public class SaveTextFile : MonoBehaviour
         }
         //gather content and  format
         string content = "";
-        foreach (var key in Keybinds.keys)
+        foreach (var key in Keybinds.keybinds)
         {
             content += $"{key.Key}:{key.Value}~";
         }
@@ -41,7 +41,7 @@ public class SaveTextFile : MonoBehaviour
             //split the data where the ~ is and hold in a collection
             string[] keyValuePair = content.Split('~');
             //Clear keys in bindings
-            Keybinds.keys.Clear();
+            Keybinds.keybinds.Clear();
             //process each key pair
             foreach (string pair in keyValuePair)
             {
@@ -52,7 +52,7 @@ public class SaveTextFile : MonoBehaviour
                 //add to dictionary
                 if (keyValue.Length == 2)
                 {
-                    Keybinds.keys.Add(keyValue[0], (KeyCode)Enum.Parse(typeof(KeyCode), keyValue[1]));
+                    Keybinds.keybinds.Add(keyValue[0], (KeyCode)Enum.Parse(typeof(KeyCode), keyValue[1]));
                 }
             }
         }

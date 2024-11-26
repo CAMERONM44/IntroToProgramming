@@ -139,7 +139,7 @@ namespace Player
         #endregion
         void SpeedControl()
         {
-            if (Keybinds.keys.Count <= 0)
+            if (Keybinds.keybinds.Count <= 0)
             {
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
@@ -156,13 +156,13 @@ namespace Player
             }
             else
             {
-                _moveSpeed = Input.GetKey(Keybinds.keys["Sprint"]) ? _sprint : Input.GetKey(Keybinds.keys["Crouch"])? _crouch : _walk;
+                _moveSpeed = Input.GetKey(Keybinds.keybinds["Sprint"]) ? _sprint : Input.GetKey(Keybinds.keybinds["Crouch"])? _crouch : _walk;
             }
         }
         private void Move()
         {
             //if we dont have any keys stored in the dictionary use this so the player can move
-            if (Keybinds.keys.Count <= 0)
+            if (Keybinds.keybinds.Count <= 0)
             {
                 // This sets _moveDirection based on player input from the Horizontal and Vertical axes.
                 _moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -180,11 +180,11 @@ namespace Player
             //use the keys
             else
             {
-                //if (Input.GetKey(Keybinds.keys["Left"]))
+                //if (Input.GetKey(Keybinds.keybinds["Left"]))
                 //{
                 //    _moveDirection.x = -1;
                 //}
-                //else if (Input.GetKey(Keybinds.keys["Right"]))
+                //else if (Input.GetKey(Keybinds.keybinds["Right"]))
                 //{
                 //    _moveDirection.x = 1;
                 //}
@@ -192,13 +192,13 @@ namespace Player
                 //{
                 //    _moveDirection.x = 0;
                 //}
-                float x = Input.GetKey(Keybinds.keys["Left"]) ? -1 : Input.GetKey(Keybinds.keys["Right"]) ? 1 : 0;
-                float z = Input.GetKey(Keybinds.keys["Forward"]) ? 1 : Input.GetKey(Keybinds.keys["Backward"]) ? -1 : 0;
+                float x = Input.GetKey(Keybinds.keybinds["Left"]) ? -1 : Input.GetKey(Keybinds.keybinds["Right"]) ? 1 : 0;
+                float z = Input.GetKey(Keybinds.keybinds["Forward"]) ? 1 : Input.GetKey(Keybinds.keybinds["Backward"]) ? -1 : 0;
                 _moveDirection = new Vector3(x, 0, z);
                 _moveDirection = transform.TransformDirection(_moveDirection);
                 _moveDirection *= _moveSpeed;
 
-                if (Input.GetKey(Keybinds.keys["Jump"]))
+                if (Input.GetKey(Keybinds.keybinds["Jump"]))
                 {
                     _moveDirection.y = _jump;
                 }

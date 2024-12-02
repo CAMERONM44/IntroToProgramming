@@ -180,18 +180,7 @@ namespace Player
             //use the keys
             else
             {
-                //if (Input.GetKey(Keybinds.keybinds["Left"]))
-                //{
-                //    _moveDirection.x = -1;
-                //}
-                //else if (Input.GetKey(Keybinds.keybinds["Right"]))
-                //{
-                //    _moveDirection.x = 1;
-                //}
-                //else
-                //{
-                //    _moveDirection.x = 0;
-                //}
+              
                 float x = Input.GetKey(Keybinds.keybinds["Left"]) ? -1 : Input.GetKey(Keybinds.keybinds["Right"]) ? 1 : 0;
                 float z = Input.GetKey(Keybinds.keybinds["Forward"]) ? 1 : Input.GetKey(Keybinds.keybinds["Backward"]) ? -1 : 0;
                 _moveDirection = new Vector3(x, 0, z);
